@@ -1,0 +1,22 @@
+% In order to deploy the robot task on embedded systems, a series of works have involved special hardware architectures for high energy efficiency. 
+% There are two kinds of hardware design for embedded moving robot: one is to design a special acceleration for a specific task; the other is to design CNN accelerators and use CNN to do the task.
+
+% \subsection{ Accelerators for a specific robot task }
+
+% The feature-point extraction (FE) operation is the fundamental component of a vision-based robot, and is also one of the most time-consuming components  ~\cite{fang2017fpga}.
+% Some previous works design hardware architectures for FE.
+% SRI-SURF  ~\cite{jia2016sri} optimizes the memory access to speed up SURF  ~\cite{bay2006surf} feature-point extraction. 
+% ~\cite{fang2017fpga} directly implements ORB on FPGA using HLS. eSLAM ~\cite{liu2019eslam} optimizes the ORB algorithm and designs hardware for better performance.
+% Some other works design architectures for the entire robot system. Hero  ~\cite{shi2018hero} is a framework for navigation and laser-based robot and cannot support vision-based robots that are much more lightweight and cheaper. 
+% ~\cite{li2019879gops} introduces CNN accelerators for the vision-based robot. 
+% However, the CNN accelerator in this work ~\cite{li2019879gops} is only used for feature-point extraction, and the accelerator is not to support different tasks at the same time. 
+% Deploying multiple CNNs on the robotic accelerator can expand the functions of robots, without designing hardware for specific functions.
+
+
+
+% \subsection{ CNN accelerators }
+
+To accelerate CNN, some previous works design frameworks to generate a specific hardware architecture for a target CNN, based on  RTL  ~\cite{li_high_2016} or HLS  ~\cite{lu_evaluating_2017}. These works need to reconfigure the FPGA to switch between different CNN models. The reconfiguration consumes seconds  ~\cite{FPGAPerformance}, which is unacceptable for the real-time system.
+Some other works design instruction-driven accelerators  ~\cite{yu2018instruction,qiu2016going,guo2017angel,dpu}, making rapid switching possible by providing different instruction sequences. 
+However, the CNN tasks on previous instruction-driven CNN accelerators are not interruptible, resulting in the latency-sensitive high-priority task waiting for the low-priority task to finish. 
+This inability of CNN accelerators to support multi-task makes it difficult for robotic researchers to use embedded FPGA.
