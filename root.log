@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.9.19)  23 NOV 2019 14:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=pdflatex 2019.9.19)  24 NOV 2019 00:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -528,32 +528,47 @@ File: fig/inca_acc.pdf Graphic file (type pdf)
 Package pdftex.def Info: fig/inca_acc.pdf  used on input line 16.
 (pdftex.def)             Requested size: 239.39923pt x 187.56795pt.
 [2 <d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/interDPR.pdf> <d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/inca_acc.pdf>]) (d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/src/cnninterrupt.tex
+Overfull \hbox (1.30186pt too wide) in paragraph at lines 15--15
+[]\OT1/ptm/m/n/7 LOAD[]W| 
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 15--16
 []\OT1/ptm/m/n/7 Weight /
  []
 
 
-Underfull \hbox (badness 4634) in paragraph at lines 17--17
-\OT1/ptm/m/n/7 for some out-put chan-nels
+Underfull \hbox (badness 5388) in paragraph at lines 17--17
+\OT1/ptm/m/n/7 DDR to on chip weight
  []
 
 
-Underfull \hbox (badness 1852) in paragraph at lines 17--17
-[]\OT1/ptm/m/n/7 Previous fi-nal
- []
-
-
-Underfull \hbox (badness 3612) in paragraph at lines 17--18
-[]\OT1/ptm/m/n/7 Weight / In-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 19--20
+Underfull \hbox (badness 10000) in paragraph at lines 17--18
 []\OT1/ptm/m/n/7 Weight /
  []
 
 
+Underfull \hbox (badness 4634) in paragraph at lines 19--19
+\OT1/ptm/m/n/7 for some out-put chan-nels
+ []
+
+
+Underfull \hbox (badness 1852) in paragraph at lines 19--19
+[]\OT1/ptm/m/n/7 Previous fi-nal
+ []
+
+
+Underfull \hbox (badness 3612) in paragraph at lines 19--20
+[]\OT1/ptm/m/n/7 Weight / In-
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 21--22
+[]\OT1/ptm/m/n/7 Weight /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 23--24
 []\OT1/ptm/m/n/7 Weight /
  []
 
@@ -563,10 +578,10 @@ pdfTeX warning: pdflatex.exe (file d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2
 <fig/singlesave.pdf, id=65, 577.52463pt x 373.20729pt>
 File: fig/singlesave.pdf Graphic file (type pdf)
 <use fig/singlesave.pdf>
-Package pdftex.def Info: fig/singlesave.pdf  used on input line 47.
+Package pdftex.def Info: fig/singlesave.pdf  used on input line 49.
 (pdftex.def)             Requested size: 262.07831pt x 169.36539pt.
 
-Overfull \hbox (10.07831pt too wide) in paragraph at lines 47--50
+Overfull \hbox (10.07831pt too wide) in paragraph at lines 49--52
  [][] 
  []
 
@@ -576,41 +591,24 @@ pdfTeX warning: pdflatex.exe (file d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2
 <fig/iau.pdf, id=97, 648.84706pt x 300.61008pt>
 File: fig/iau.pdf Graphic file (type pdf)
 <use fig/iau.pdf>
-Package pdftex.def Info: fig/iau.pdf  used on input line 166.
+Package pdftex.def Info: fig/iau.pdf  used on input line 168.
 (pdftex.def)             Requested size: 226.79846pt x 105.07289pt.
 
 
 pdfTeX warning: pdflatex.exe (file d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/interexample.pdf): PDF inclusion: found PDF version <1.6>, but at most version <1.5> allowed
-<fig/interexample.pdf, id=98, 500.63838pt x 194.14532pt>
+<fig/interexample.pdf, id=98, 557.15654pt x 287.48224pt>
 File: fig/interexample.pdf Graphic file (type pdf)
 <use fig/interexample.pdf>
-Package pdftex.def Info: fig/interexample.pdf  used on input line 178.
-(pdftex.def)             Requested size: 226.79846pt x 87.95114pt.
-) (d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/src/experiments.tex
+Package pdftex.def Info: fig/interexample.pdf  used on input line 180.
+(pdftex.def)             Requested size: 226.79846pt x 117.02625pt.
+) [4 <d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/iau.pdf> <d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/interexample.pdf>] (d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/src/experiments.tex
 
 pdfTeX warning: pdflatex.exe (file d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/env.pdf): PDF inclusion: found PDF version <1.6>, but at most version <1.5> allowed
-<fig/env.pdf, id=99, 518.9839pt x 403.4021pt>
+<fig/env.pdf, id=122, 527.47467pt x 531.71536pt>
 File: fig/env.pdf Graphic file (type pdf)
 <use fig/env.pdf>
 Package pdftex.def Info: fig/env.pdf  used on input line 9.
-(pdftex.def)             Requested size: 201.60077pt x 156.70448pt.
-
-LaTeX Warning: Reference `fig:maexp' on page 1 undefined on input line 22.
-
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 22.
-(c:/texlive/2019/texmf-dist/tex/latex/psnfss/omsptm.fd
-File: omsptm.fd 
-)
-LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 22.
-
-
-LaTeX Warning: Reference `fig:maexp' on page 1 undefined on input line 22.
-
-[4 <d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/iau.pdf> <d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/interexample.pdf>]
-
-LaTeX Warning: Reference `tab:hardware' on page 1 undefined on input line 28.
-
+(pdftex.def)             Requested size: 201.60077pt x 203.22224pt.
 
 
 pdfTeX warning: pdflatex.exe (file d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/PRresult.pdf): PDF inclusion: found PDF version <1.6>, but at most version <1.5> allowed
@@ -619,10 +617,7 @@ File: fig/PRresult.pdf Graphic file (type pdf)
 <use fig/PRresult.pdf>
 Package pdftex.def Info: fig/PRresult.pdf  used on input line 58.
 (pdftex.def)             Requested size: 249.48138pt x 206.61868pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [5 <d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/env.pdf> <d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/PRresult.pdf
+[5 <d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/env.pdf> <d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/PRresult.pdf
 
 pdfTeX warning: pdflatex.exe (file d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/fig/PRresult.pdf): PDF inclusion: multiple pdfs with page group included in a single page
 >]) (d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/src/conclusion.tex) (d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/root.bbl
@@ -642,21 +637,17 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[6] (d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/root.aux)
-
-LaTeX Warning: There were undefined references.
-
- ) 
+[6] (d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/root.aux) ) 
 Here is how much of TeX's memory you used:
- 7164 strings out of 492623
- 121295 string characters out of 6133290
- 208057 words of memory out of 5000000
- 10947 multiletter control sequences out of 15000+600000
+ 7142 strings out of 492623
+ 120926 string characters out of 6133290
+ 209057 words of memory out of 5000000
+ 10928 multiletter control sequences out of 15000+600000
  47778 words of font info for 102 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,11n,38p,1203b,357s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2019/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2019/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2019/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2019/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2019/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/root.pdf (6 pages, 1857793 bytes).
+Output written on d:/tsinghua/boshi4/paperwriting/dac_2020/DAC2020/root.pdf (6 pages, 1859922 bytes).
 PDF statistics:
  212 PDF objects out of 1000 (max. 8388607)
  133 compressed objects within 2 object streams

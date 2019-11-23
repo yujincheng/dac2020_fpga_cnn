@@ -13,44 +13,44 @@ Database file #1: src/fpgaslam.bib
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 
 Done.
-You've used 30 entries,
+You've used 27 entries,
             4087 wiz_defined-function locations,
-            986 strings with 12763 characters,
-and the built_in function-call counts, 23926 in all, are:
-= -- 1799
-> -- 661
-< -- 189
-+ -- 363
-- -- 120
-* -- 1148
-:= -- 3367
-add.period$ -- 66
-call.type$ -- 30
-change.case$ -- 29
-chr.to.int$ -- 459
-cite$ -- 30
-duplicate$ -- 1703
-empty$ -- 2035
-format.name$ -- 145
-if$ -- 5650
+            971 strings with 12221 characters,
+and the built_in function-call counts, 21527 in all, are:
+= -- 1613
+> -- 602
+< -- 166
++ -- 328
+- -- 111
+* -- 1037
+:= -- 3039
+add.period$ -- 59
+call.type$ -- 27
+change.case$ -- 26
+chr.to.int$ -- 399
+cite$ -- 27
+duplicate$ -- 1537
+empty$ -- 1839
+format.name$ -- 134
+if$ -- 5082
 int.to.chr$ -- 0
-int.to.str$ -- 30
-missing$ -- 321
-newline$ -- 123
-num.names$ -- 26
-pop$ -- 832
+int.to.str$ -- 27
+missing$ -- 293
+newline$ -- 112
+num.names$ -- 24
+pop$ -- 756
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 1827
+skip$ -- 1644
 stack$ -- 0
-substring$ -- 1105
-swap$ -- 1358
-text.length$ -- 36
+substring$ -- 962
+swap$ -- 1220
+text.length$ -- 33
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 30
+type$ -- 27
 warning$ -- 0
-while$ -- 100
-width$ -- 32
-write$ -- 304
+while$ -- 90
+width$ -- 29
+write$ -- 276

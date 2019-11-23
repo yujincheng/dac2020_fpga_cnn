@@ -12,7 +12,9 @@
 	\hline
 	Type  & Description & Backups & Recovery \bigstrut\\
 	\hline
-	LOAD  & Load weights/input data/bias from DDR to on chip weight buffer. & -     & Weight / Inputdata \bigstrut\\
+	LOAD\_W  & Load weights/bias from DDR to on chip weight buffer. & -     & Weight / Inputdata \bigstrut\\
+	\hline
+	LOAD\_D  & Load input featuremaps from DDR to on chip weight buffer. & -     & Weight / Inputdata \bigstrut\\
 	\hline
 	CALC\_I & Calculate intermediate results for some output channels from partial  input channels. & Previous final results / Intemediate data  & Weight / Inputdata /  intemediate data \bigstrut\\
 	\hline
@@ -37,7 +39,7 @@
 
 \subsection{ Instruction Driven Accelerator }
 \label{sec:instrAcc}
-There are three categories of instruction in the instruction-driven accelerator: LOAD, CALC (CALC\_I / CALC\_F), and SAVE  ~\cite{guo2017angel,qiu2016going,yu2018instruction}. The instruction description of each kind of instruction is listed in \Cref{tab:instr}. 
+There are three categories of instruction in the instruction-driven accelerator: LOAD (LOAD\_W / LOAD\_D), CALC (CALC\_I / CALC\_F), and SAVE  ~\cite{guo2017angel,qiu2016going,yu2018instruction}. The instruction description of each kind of instruction is listed in \Cref{tab:instr}. 
 
 Each CALC  instruction,  including CALC\_I and CALC\_F, processes the convolution according to the hardware parallelism with $Para_{height}$ lines from $ Para_{in} $ input channels to $ Para_{out}$ output channels. $Para_{height}$, $ Para_{in} $, and $ Para_{out} $ are the parallelism along the height, input channel and output channel dimensions, which is determined by the hardware and original ISA. The convolution of the last $ Para_{in} $ input channels is CALC\_F, and the convolutions for the former input channels are CALC\_I, as illustrated in \Cref{fig:singlesave}(a). The CALC\_F and the CALC\_I instructions for the same output channels, as well as the LOAD instructions for corresponding input feature-maps and weights, are considered as a \textbf{CalcBlob}.
 
@@ -180,6 +182,6 @@ Subsequent not-virtual SAVE instructions will be modified according to the recor
 	\label{fig:interexample}
 \end{figure}
 
-\Cref{fig:interexample}(c) is the instruction sequence from DDR with VI-ISA. The instructions are generated for the scheduling shown in {fig:singlesave}. 
-\Cref{fig:interexample}(d) is the original ISA instructions translated by the IAU without interrupt. 
-When an interrupt occurs at the first CalcBlob, \Cref{fig:interexample}(e) illustrates the backup/recovery instructions (Blue) and the modified SAVE instruction (Red). 
+\Cref{fig:interexample}(a) is the instruction sequence from DDR with VI-ISA. The instructions are generated for the scheduling shown in {fig:singlesave}. The Vir\_SAVE instruction is responsible for backing up executing status, i.e., saving the output results of the first CALC\_F. The Vir\_LOAD\_D instruction restore the input featuremaps from DDR to on-chip memory. The Vir\_LOAD. The SAVE instruction in \Cref{fig:interexample}(a) saves all the output results for the two CALC\_F.
+\Cref{fig:interexample}(b) is the original ISA instructions translated by the IAU without interrupt. The virtual instructions (Vir\_SAVE and Vir\_LOAD) are skipped and discarded by the IAU. Thus the accelerator receives the original ISA sequence without backup or restore instructions.
+When an interrupt occurs at the first CalcBlob, \Cref{fig:interexample}(c) illustrates the backup/recovery instructions (Blue) and the modified SAVE instruction (Red). Because the output results of the first CALC\_F are stored to DDR with the fitst SAVE, which is translated from the Vir\_SAVE in fig(a), the last SAVE instruction is modified to only store the output results of the second CALC\_F.

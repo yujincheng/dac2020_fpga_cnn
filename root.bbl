@@ -149,17 +149,6 @@ V.~Lepetit, F.~Moreno-Noguer, and P.~Fua, ``Ep n p: An accurate o ( n )
   solution to the p n p problem,'' \emph{International Journal of Computer
   Vision}, vol.~81, no.~2, pp. 155--166, 2009.
 
-\bibitem{Choudhary:2017e66}
-S.~Choudhary, L.~Carlone, C.~Nieto, J.~Rogers, H.~I. Christensen, and
-  F.~Dellaert, ``{Distributed mapping with privacy and communication
-  constraints: Lightweight algorithms and object-based models},'' \emph{The
-  International Journal of Robotics Research}, vol.~36, pp. 1286--1311, 2017.
-
-\bibitem{cieslewski2018data}
-T.~Cieslewski, S.~Choudhary, and D.~Scaramuzza, ``Data-efficient decentralized
-  visual slam,'' in \emph{ICRA}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE,
-  2018, pp. 2466--2473.
-
 \bibitem{Andre2014}
 T.~Andre, D.~Neuhold, and C.~Bettstetter, ``Coordinated multi-robot
   exploration: Out of the box packages for {ROS},'' in \emph{GLOBECOM WiUAV
@@ -174,11 +163,5 @@ H.~Umari and S.~Mukhopadhyay, ``Autonomous robotic exploration based on
 E.~Marder-Eppstein, E.~Berger, T.~Foote, B.~Gerkey, and K.~Konolige, ``The
   office marathon: Robust navigation in an indoor office environment,'' in
   \emph{ICRA}, 2010.
-
-\bibitem{Vivado}
-\BIBentryALTinterwordspacing
-``{Vivado Design Suite},'' 2019. [Online]. Available:
-  \url{https://www.xilinx.com/support/university/vivado.html}
-\BIBentrySTDinterwordspacing
 
 \end{thebibliography}
