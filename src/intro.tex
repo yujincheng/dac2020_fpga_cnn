@@ -13,13 +13,13 @@ With the help of network quantization and on-chip data reuse, the speed of CNN a
 However, these CNN accelerators are designed and optimized to accelerate a single CNN. They can not automatically schedule two or more tasks simultaneously. 
 
 
-\begin{figure}[t]
+\begin{figure*}[t]
 	\centering
     \includegraphics[width=0.99\linewidth]{fig/inca.pdf}
-    \caption{ INCA framework. At task decomposition step, the operations in different ROS nodes are separated to CNN backbones, CNN Post-Processing, and Other CPU Tasks. At computation deployment, the CNN backbone and Post-Processing are deployed with hardware modules and software optimizing.  
+    \caption{ INCA framework.  
     }
 	\label{fig:inca}
-\end{figure}
+\end{figure*}
 
 In order to facilitate robotic researchers to run different CNN tasks simultaneously on the FPGA accelerator, the accelerator should support the following features:
 
@@ -28,22 +28,22 @@ In order to facilitate robotic researchers to run different CNN tasks simultaneo
 \textbf{Finishing before deadline:} In a robot, some tasks must be completed within the specified hard deadlines, such as feature-point extraction. The moving robot's perception, including estimation of itself's location and the obstacles' position, is based on the feature-points. If the feature point extraction is not completed before the deadline, the robot can not estimate the surrounding environment, causing collisions or even damage. Those critical tasks with a more stringent headline need to be performed prior to some non-critical tasks ~\cite{RamsauerKLM17}. In DSLAM, the priority of feature-point extraction (FE) is higher than that of place recognition (PR). Because PR is only related to efficiency, yet FE ensures system safety.
 
 To address above challenges, we propose an INterruptible CNN Accelerator (INCA) for rapid deployment of robot application on FPGA. 
-The work flow of INCA is illustrated in \Cref{fig:inca}. 
-INCA is a two-step framework for mapping software to embedded FPGA. 
-The first step is the task decomposition, which decomposes the computation in ROS nodes into different computation types, including CNN backbones, CNN post-processing, and other CPU tasks.
+The work flow of INCA is illustrated in \Cref{fig:inca}(b). 
+% INCA is a two-step framework for mapping software to embedded FPGA. 
+The first step is the task decomposition, which decomposes the computation in ROS nodes into CNN and other CPU tasks.
 The second step is to deploy the computation onto the FPGA. 
-The CNN backbones of different tasks, such as the VGG model  ~\cite{kim2016accurate} in SupoerPoint feature-point extraction  ~\cite{detone2018superpoint} and the ResNet101 model  ~\cite{he2016deep} in GeM place recognition  ~\cite{radenovic2018fine}, are compiled to the interruptible Virtual-Instruction Instruction Set Architecture (VI-ISA), which runs on the CNN accelerator. The VI-ISA is a simple extension of the original ISA, in which the extension method is not limited to a specific original ISA. Thus, the virtual-instruction-based interrupt can be easily applied to various instruction-based CNN accelerators  ~\cite{yu2018instruction,qiu2016going}, such as Angel-Eye ~\cite{guo2017angel} and DPU ~\cite{dpu}.
+The CNN backbones of different tasks, such as the VGG model  ~\cite{kim2016accurate} in SupoerPoint feature-point extraction  ~\cite{detone2018superpoint} and the ResNet101 model  ~\cite{he2016deep} in GeM place recognition  ~\cite{radenovic2018fine}, are compiled to the interruptible Virtual-Instruction Instruction Set Architecture (VI-ISA). With the help of the VI-ISA, the accelerator can be time multiplexed with different tasks.
 
 
 % The CNN backbones of different tasks, such as the VGG model  ~\cite{kim2016accurate} in SupoerPoint ~\cite{detone2018superpoint} and the ResNet101 model  ~\cite{he2016deep} in GeM  ~\cite{radenovic2018fine}, are compiled to the interruptible Virtual-Instruction Instruction Set Architecture (VI-ISA), which runs on the CNN accelerator.
 % The VI-ISA is a simple extension of the original ISA, in which the extension method is not limited to a specific original ISA. Thus, the virtual-instruction-based interrupt can be easily applied to various instruction-based CNN accelerators  ~\cite{yu2018instruction,qiu2016going}, such as Angel-Eye ~\cite{guo2017angel} and DPU ~\cite{dpu}.
 
 
-In conclusion, INCA facilitate robotic researchers to run different CNN tasks simultaneously on the FPGA with the following contributions:
+INCA facilitate robotic researchers to run different CNN tasks simultaneously on the FPGA with the following contributions:
 \begin{itemize}
 \item We propose a \textbf{virtual-instruction-based} interrupt method to make the CNN accelerator support dynamic multi-task scheduling by priority. The method solves the hardware resources conflicts when accelerating different CNN tasks on ROS~\cite{quigley2009ros}.
 % \item We only needs to modify the instruction fetch module of the CNN accelerator in hardware to support interrupt. Thus, it is easy to be extended to different instruction-driven CNN accelerators.
-\item We propose a CNN-based DSLAM system to evaluate INCA. CNN-based methods for feature-point extraction (FE) and place recognition (PR) are accelerated with FPGA on ROS platform. With the help of the unified interface in ROS, these CNN-based methods can be easily used by other developers in different applications.
+\item We propose a CNN-based DSLAM system based on INCA. CNN-based methods for feature-point extraction (FE) and place recognition (PR) are accelerated with FPGA on ROS platform. With the help of the unified interface in ROS, these CNN-based methods can be easily used by other developers in different applications.
 \end{itemize}
 % In terms of perception, CNN has surpassed traditional algorithms in tasks such as object detection \cite{redmon2018yolov3} and scene segmentation \cite{huang2019mask}. 
 % In decision-making, CNN also performs well in path planning \cite{chen2017socially} and dynamic obstacle avoidance \cite{kaufmann2018deep}.

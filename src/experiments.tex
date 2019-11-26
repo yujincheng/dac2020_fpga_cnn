@@ -6,11 +6,21 @@
 %   \vspace{-0.1cm} 
   % \setlength{\abovecaptionskip}{0cm} 
 %   \setlength{\belowcaptionskip}{-0.05cm} 
-  \includegraphics[width=0.8\linewidth]{fig/env.pdf}
+  \includegraphics[width=0.9\linewidth]{fig/env.pdf}
   \caption{Multi-robot exploration: environment and results. }
   \label{fig:env}
 \end{figure}
 
+
+\begin{figure*}[t]
+  \centering
+%   \vspace{-0.1cm} 
+  % \setlength{\abovecaptionskip}{0cm} 
+%   \setlength{\belowcaptionskip}{-0.05cm} 
+  \includegraphics[width=0.99\linewidth]{fig/barresult.pdf}
+  \caption{ comparison of different interrupt methods. }
+  \label{fig:barresult}
+\end{figure*}
 
 % In this section, the evaluation of the instruction-based-interruption, hardware modules for FE post-processing, and the overall MR-Exploration system are presented and analyzed.
 
@@ -18,12 +28,11 @@
 
 \subsection{ Experiment Setup }
 
-The hardware-in-loop evaluate environment is illustrated in \Cref{fig:env}(a). There is a simulation server providing the simulation environment based on AirSim  ~\cite{shah2018airsim}, which is a high-fidelity visual and physical simulation for autonomous vehicles. The AirSim simulation server provides the camera data for each agent. Two Xilinx ZCU102 boards  ~\cite{zcu102}, with ZU9 MPSoC  ~\cite{MPSoC}, are responsible for the calculation of each agent. 
-The components in DSLAM system for each agent are implemented in the ZCU102 board. The implementation of the FE, SuperPoint ~\cite{detone2018superpoint}), are introduced in former sections. 
-GeM  ~\cite{radenovic2018fine} is used to implement the PR module. GeM is a CNN-based method with ResNet101 \cite{he2016deep} as the backbone, and the post-processing of GeM calculates the 3-norm of the output featuremaps.
-The VO module in the experiment is the PnP  ~\cite{LepetitMoreno-Noguer-EPnP} method, which is widely used in the feature-point based VO. 
-% including the open source the ORB-SLAM  ~\cite{Mur-Artal:2017281}. 
-The Map Merging  ~\cite{Andre2014}, Exploration  ~\cite{8202319}, and Navigation  ~\cite{tbd} in this work are provided by the ROS framework. 
+The hardware-in-loop evaluate environment is illustrated in \Cref{fig:env}(a). There is a simulation server providing the simulation environment based on AirSim  ~\cite{shah2018airsim}. The AirSim simulator provides the camera data for the two agents. Two Xilinx ZCU102 boards  ~\cite{zcu102}, with ZU9 MPSoC  ~\cite{MPSoC}, are responsible for the calculation of each agent.
+SuperPoint \cite{detone2018superpoint} is used for extracting feature-points. GeM  ~\cite{radenovic2018fine} is used to implement the PR module, which is based on ResNet101 \cite{he2016deep}. 
+
+The CNN is calculated by the Angel-Eye CNN accelerator ~\cite{guo2017angel} on the FPGA side of ZU9 MPSoC, and other operations are on the CPU side.
+For a precise evaluation the CNN running time, we record the clock cycles of the beginning and end of each instruction. The time of the interrupt response latency and the total cost in the following evaluation is calculated from the clock cycles and the clock frequence.
 
 % The hardware resources are listed in \Cref{tab:hardware}. The hardware resources are provided by Vivado after hardware implementation. Vivado\cite{Vivado} is the development toolchain for MPSoC provided by Xilinx. The CNN backbone is calculated by the Angel-Eye CNN accelerator ~\cite{guo2017angel} on the FPGA side of ZCU102 (Programmable logic, PL side). The FE post-processing steps run on our proposed accelerators, also on the PL side. The PL side has 2 clock frequencies. The CNN accelerator and the IAU are running at 300MHz. The accelerator for FE post-processing is running at 200MHz. Compared with the CNN accelerator, IAU and FE post-processing use very little hardware resources.
 
@@ -50,34 +59,33 @@ The Map Merging  ~\cite{Andre2014}, Exploration  ~\cite{8202319}, and Navigation
 %   \label{tab:hardware}%
 % \end{table}%
 
-\begin{figure}[t]
-  \centering
-%   \vspace{-0.1cm} 
-  % \setlength{\abovecaptionskip}{0cm} 
-%   \setlength{\belowcaptionskip}{-0.05cm} 
-  \includegraphics[width=0.99\linewidth]{fig/PRresult.pdf}
-  \caption{The interrupt response latency \& extra time cost.}
-  \label{fig:scatter1024}
-\end{figure}
+% \begin{figure}[t]
+%   \centering
+% %   \vspace{-0.1cm} 
+%   % \setlength{\abovecaptionskip}{0cm} 
+% %   \setlength{\belowcaptionskip}{-0.05cm} 
+%   \includegraphics[width=0.99\linewidth]{fig/PRresult.pdf}
+%   \caption{The interrupt response latency \& extra time cost.}
+%   \label{fig:scatter1024}
+% \end{figure}
 
 
 \subsection{Virtual Instruction-based interrupt }
 
-\subsubsection{ Interrupt response latency and extra cost}
+We compare the interrupt respond latency of our VI method with layer-by-layer method at different layers from different networks, including ResNet \cite{he2016deep}, VGG \cite{simonyan2014very}, and MobileNet \cite{howard2017mobilenets}. The results is illustrated in \Cref{fig:barresult}(a). We evaluate our method on both th big accelerator with large hardware parallelism and small accelerator with small parallelism. 
+In the ResNet and VGG, the average interrupt respond latency of the layer-by-layer method is $ms$ to tens of $ms$, which makes the high priority task with hard deadline in embedded system unable to be completed on time. With our VI method, the latency can be reduced to less than 100$us$, so that the high priority task can be started immediately and completed on time. 
+For the lightweight network (MobileNet), although the latency of the layer-by-layer method is about 1ms, we can still reduce the latency by 2-3 orders of magnitude with VI method. This result also matches the theoretical analysis in \Cref{equ:rate}.
 
 
-We evaluate the latency to respond the interrupt and the performance degradation of different interrupt method. In MR-Exploration, only the low-priority PR task is interruptible, and the interrupt position is unpredictable. GeM  ~\cite{radenovic2018fine} is used to implement the PR module in the experiment.
-The CNN backbone of the GeM is ResNet101  ~\cite{he2016deep}, which contains 101 convolution layers. The input shape of the CNN is $480 \times 640 \times 3$. The parallelism of the Angel-Eye is $Para_{height}=8$, $Para_{in}=16$, $Para_{out}=16$, i.e. each CALC instruction processes 8 lines from 16 input channels to 16 output channels. 
-% Thus, we randomly selected some interrupt locations inside the PR network.
+In MR-Exploration, only the low-priority PR task is interruptible, and the interrupt position is unpredictable. GeM  ~\cite{radenovic2018fine} is used to implement the PR module in the experiment. We also evaluate the latency and the extra cost between different interrupt methods. The result is shown in \Cref{fig:barresult}(a).
+The CNN backbone of the GeM is ResNet101  ~\cite{he2016deep}, which contains 101 convolution layers. The input shape of the CNN is $480 \times 640 \times 3$. The parallelism of the Angel-Eye is $Para_{height}=8$, $Para_{in}=16$, $Para_{out}=16$. 
+% The latency to respond the interrupt in CPU-like method consists of the time to finish current executing instruction and the data backup time ($t_{latency} = t_1+t_2$) for the on-chip data/weights caches (totally 2.2MB). The latency in layer-by-layer interrupt is the time to finish current layer. The latency of our virtual-instruction-based method is the time to finish current executing instruction and the backup time for the calculated output results. 
+% The cost of CPU-like interrupt is the data transfer time of all the on-chip caches (totally 2.2MB) to/from DDR ($t_{cost} = t_2+t_4$). The cost of virtual-instruction-based method is only the recovery of the input/weights from DDR to on-chip caches ($t_{cost} = t_4$). There is no extra cost for the layer-by-layer interrupt.
 
-As shown in \Cref{fig:scatter1024}(a), the latency to respond the interrupt in CPU-like method consists of the time to finish current executing instruction and the data backup time ($t_{latency} = t_1+t_2$) for the on-chip data/weights caches (totally 2.2MB). The latency in layer-by-layer interrupt is the time to finish current layer. The latency of our virtual-instruction-based method is the time to finish current executing instruction and the backup time for the calculated output results. 
-
-The cost of CPU-like interrupt is the data transfer time of all the on-chip caches (totally 2.2MB) to/from DDR ($t_{cost} = t_2+t_4$). The cost of virtual-instruction-based method is only the recovery of the input/weights from DDR to on-chip caches ($t_{cost} = t_4$). There is no extra cost for the layer-by-layer interrupt.
-
-% For a precise evaluation the CNN run time, we record the clock cycles of the beginning and end of each instruction. The time of the interrupt response latency and the total cost in the following evaluation is calculated from the clock cycles and the clock frequence.
+% 
 
 
-We randomly sample 12 positions of the ResNet101 CNN backbone. The interrupt response latency and the extra time cost for different implementation of interrupt at the positions are listed in \Cref{fig:scatter1024}(b).
+We randomly sample 12 positions of the ResNet101 CNN backbone. The interrupt response latency and the extra time cost for different implementation of interrupt at the positions are listed in \Cref{fig:barresult}(b).
 The CPU-like interrupt consumes the most extra cost ($t_{cost}$). Though the layer-by-layer interrupt consumes no extra time, the latency is much higher than our virtual-instruction-based interrupt. 
 This is because the layer-by-layer interrupt need to wait for completion of a layer. The performance at same interrupt position in our proposed virtual interrupt can interrupt inside a layer, with lower latency.
 
@@ -114,6 +122,7 @@ Furthermore, though the network structures differ between different CNNs, the co
 
 \subsection{ ROS based MR-Exploration }
 
+
 The results of the Multi-Robot Exploration based on INCA is shown in \Cref{fig:env}. The space in the AirSim~\cite{shah2018airsim} for the robots to explore is shown in \Cref{fig:env}(a). It is a simple rectangle area with four different pillars, and some chairs at the center (in the white box).  \Cref{fig:env}(b) shows how PR works for map merging. The FE and VO of each agent produce the local map and trajectory on each ZCU102 board. When the PR threads on different agents find out a similar scene, the relative pose of the two agents at the similar scene is calculated. The map and the trajectory is merged with the calculated relative pose, as shown in \Cref{fig:env}(c).
 
-In this example, the FE and PR are both executed on the same Angel-Eye accelerator. The frequency of the input camera is 20fps, and each input frame is fed to the FE, and FE module would take up accelerator. While the CPU process VO with the feature-points from FE, the accelerator can switch to process the low-priority PR task. Because the executing time of VO varies, the time to finish a PR task is different. In this example, the time from the beginning of a PR to its end is 320$\sim$500 ms. Thus, the PR process one key frame every 7$\sim$10 input frames.
+In this example, the FE and PR are both executed on the same Angel-Eye accelerator. The frequency of the input camera is 20fps, and each input frame is fed to the FE, and FE module would take up accelerator. While the CPU process VO with the feature-points from FE, the accelerator can switch to process the low-priority PR task. Because the executing time of VO varies, the time to finish a PR task is different. In this example, the time from the beginning of a PR to its end is 320$\sim$500 ms. Thus, the PR process one frame every 7$\sim$10 input frames.
