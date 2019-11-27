@@ -3,8 +3,5 @@
 In this paper, we propose an interruptible CNN accelerator and a deployment framework, INCA. 
 With the help of the virtual-instruction-based interrupt method (VI method), the CNN accelerator can switch between different CNN tasks with low interrupt response latency and low extra cost. 
 INCA only needs to modify the instruction fetch module to IAU in hardware. Thus, it is easy to extend to different instruction-driven accelerators.
-% Note that the development of CPU task scheduling evolved from single-core multi-tasking to multi-core multi-tasking. 
-% Similarly, 
 INCA currently focuses on interrupt support for single-core multi-tasking. 
 We plan to investigate the multi-core multi-tasking for CNN accelerators as part of future work.
-% Therefore, with the help of INCA, the independent software in ROS can access the accelerator without hardware resources conflicts, on various CNN accelerators.

@@ -3,17 +3,17 @@
 
 
 
-% In this section, the evaluation of the instruction-based-interruption, hardware modules for FE post-processing, and the overall MR-Exploration system are presented and analyzed.
+% In this section, the evaluation of the instruction-based-interruption, hardware modules for FE post-processing, and the overall DSLAM system are presented and analyzed.
 
 
 
 \subsection{ Experiment Setup }
 
 The hardware-in-loop evaluate environment is illustrated in \Cref{fig:env}(a). There is a simulation server providing the simulation environment based on AirSim \cite{shah2018airsim}. The AirSim simulator provides the camera data for the two agents. Two Xilinx ZCU102 boards \cite{zcu102}, with ZU9 MPSoC \cite{MPSoC}, are responsible for the calculation of each agent.
-SuperPoint \cite{detone2018superpoint} is used for extracting feature-points. GeM \cite{radenovic2018fine} is used to implement the PR module, which is based on ResNet101 \cite{he2016deep}. 
+SuperPoint \cite{detone2018superpoint} is used for extracting feature-points. GeM \cite{radenovic2018fine} is used to implement the PR module.
 
 The CNN is calculated by the Angel-Eye CNN accelerator \cite{guo2017angel} on the FPGA side of ZU9 MPSoC, and other operations are on the CPU side.
-For a precise evaluation the CNN running time, we record the clock cycles of the beginning and end of each instruction. The time of the interrupt response latency and the total cost in the following evaluation is calculated from the clock cycles and the clock frequence.
+For a precise evaluation of the CNN running time, we record the clock cycles of the beginning and end of each instruction. The time of the interrupt response latency and the total cost in the following evaluation is calculated from the clock cycles and the clock frequency. The CNN accelerator and the IAU are running at 300MHz.
 
 % The hardware resources are listed in \Cref{tab:hardware}. The hardware resources are provided by Vivado after hardware implementation. Vivado \cite{Vivado} is the development toolchain for MPSoC provided by Xilinx. The CNN backbone is calculated by the Angel-Eye CNN accelerator \cite{guo2017angel} on the FPGA side of ZCU102 (Programmable logic, PL side). The FE post-processing steps run on our proposed accelerators, also on the PL side. The PL side has 2 clock frequencies. The CNN accelerator and the IAU are running at 300MHz. The accelerator for FE post-processing is running at 200MHz. Compared with the CNN accelerator, IAU and FE post-processing use very little hardware resources.
 
@@ -53,17 +53,17 @@ For a precise evaluation the CNN running time, we record the clock cycles of the
 
 \subsection{Virtual Instruction-based interrupt }
 
-In MR-Exploration, only the low-priority PR task is interruptible, and the interrupt position is unpredictable. GeM \cite{radenovic2018fine} is used to implement the PR module in the experiment.
+In DSLAM, only the low-priority PR task is interruptible, and the interrupt position is unpredictable. GeM \cite{radenovic2018fine} is used to implement the PR module in the experiment.
 The CNN backbone of the GeM is ResNet101 \cite{he2016deep}, which contains 101 convolution layers. The input shape of the CNN is $480 \times 640 \times 3$. The parallelism of the Angel-Eye is $Para_{height}=8$, $Para_{in}=16$, $Para_{out}=16$. 
 We randomly sample 12 positions of the ResNet101 CNN backbone. The interrupt response latency and the extra time cost for different implementation of interrupt at the positions are listed in \Cref{fig:barresult}(a).
 The CPU-like interrupt consumes the most extra cost ($t_{cost}$). Though the layer-by-layer interrupt consumes no extra time, the latency is much higher than our virtual-instruction-based interrupt. 
-This is because the layer-by-layer interrupt need to wait for completion of a layer. The performance at same interrupt position in our proposed virtual interrupt can interrupt inside a layer, with lower latency.
+This is because the layer-by-layer interrupt needs to wait for the completion of a layer. The performance at the same interrupt position in our proposed virtual interrupt can interrupt inside a layer, with lower latency.
 
 \label{sec:viexp}
 
 Furthermore, though the network structures differ between different CNNs, the convolutional layers, which are the basic component in CNN, are similar between different CNNs. INCA monitors the running status inside each layer, and the interrupt respond latency and extra cost are only relevant to the currently operating layer. 
 We compare the interrupt respond latency of our VI method with layer-by-layer method at different layers from different networks, including ResNet \cite{he2016deep}, VGG \cite{simonyan2014very}, and MobileNet \cite{howard2017mobilenets}. The results is illustrated in \Cref{fig:barresult}(b). We evaluate our method on both th big accelerator with large hardware parallelism and small accelerator with small parallelism. 
-In the ResNet and VGG, the average interrupt respond latency of the layer-by-layer method is $ms$ to tens of $ms$, which makes the high priority task with hard deadline in embedded system unable to be completed on time. With our VI method, the latency can be reduced to less than 100$us$, so that the high priority task can be started immediately and completed on time. 
+In the ResNet and VGG, the average interrupt respond latency of the layer-by-layer method is $ms$ to tens of $ms$, which makes the high priority task with hard deadline in the embedded system unable to be completed on time. With our VI method, the latency can be reduced to less than 100$us$, so that the high priority task can be started immediately and completed on time. 
 For the lightweight network (MobileNet), although the latency of the layer-by-layer method is about 1ms, we can still reduce the latency by 2-3 orders of magnitude with VI method. This result also matches the theoretical analysis in \Cref{equ:rate}.
 
 
@@ -76,7 +76,7 @@ For the lightweight network (MobileNet), although the latency of the layer-by-la
 
 % \subsubsection{ Time comparison between $t_1$ and $t_2$ }
 
-% As described in \Cref{sec:virtualinstr}, the Layer-By-Layer interrupt method do not need to backup data before interruption ($t_2 = 0$). Though our Virtual-Instruction method (VI method) need to spend time to backup the final results, which are already generated yet not stored to DDR ($t_2$). However, compared with computation, the time of data backup ($t_2$) is short. We list the backup time and the convolution time ($t_1$) at some of the interrupt position in \Cref{fig:scatter1024}(b), with different featuremap shape, kernel size, and input/output channels. $H$, $W$ are the height, width of input featuremaps. $Ch_{in}$, $Ch_{out}$ are the number of input and output channels. The time of backup and calculation is listed in $Backup$ and $Conv$ columns. The ratio of backup and calculation are listed in the last column. The backup operation only consumes less than 20\% of the calculation time. For the first layer (first line of \Cref{tab:timecompare}). The input channels number is too small, so the calculation time is also short. Therefore, the backup time has reached half of the calculation time. 
+% As described in \Cref{sec:virtualinstr}, the layer-by-layer interrupt method do not need to backup data before interruption ($t_2 = 0$). Though our Virtual-Instruction method (VI method) need to spend time to backup the final results, which are already generated yet not stored to DDR ($t_2$). However, compared with computation, the time of data backup ($t_2$) is short. We list the backup time and the convolution time ($t_1$) at some of the interrupt position in \Cref{fig:scatter1024}(b), with different featuremap shape, kernel size, and input/output channels. $H$, $W$ are the height, width of input featuremaps. $Ch_{in}$, $Ch_{out}$ are the number of input and output channels. The time of backup and calculation is listed in $Backup$ and $Conv$ columns. The ratio of backup and calculation are listed in the last column. The backup operation only consumes less than 20\% of the calculation time. For the first layer (first line of \Cref{tab:timecompare}). The input channels number is too small, so the calculation time is also short. Therefore, the backup time has reached half of the calculation time. 
 
 % % Table generated by Excel2LaTeX from sheet 'Sheet4'
 % \begin{table}[t]
@@ -103,10 +103,10 @@ For the lightweight network (MobileNet), although the latency of the layer-by-la
 % \end{table}%
 
 
-\subsection{ ROS based MR-Exploration }
+\subsection{ ROS based DSLAM }
 
 
-The results of the Multi-Robot Exploration based on INCA is shown in \Cref{fig:env}. The space in the AirSim \cite{shah2018airsim} for the robots to explore is shown in \Cref{fig:env}(a). It is a simple rectangle area with four different pillars, and some chairs at the center (in the white box). \Cref{fig:env}(b) shows how place recognition (PR) works for map merging. The visual odometry (VO) based on feature-points on each agent produce the local map and trajectory. When the PR threads find out a similar scene, and the maps and the trajectories are merged via the similar scene, as shown in \Cref{fig:env}(c).
+The results of the DSLAM based on INCA is shown in \Cref{fig:env}. The space in the AirSim \cite{shah2018airsim} for the robots to explore is shown in \Cref{fig:env}(a). It is a simple rectangle area with four different pillars, and some chairs at the center (in the white box). \Cref{fig:env}(b) shows how PR works for map merging. The visual odometry (VO) based on feature-points on each agent produces the local map and trajectory. When the PR threads find out a similar scene, and the maps and the trajectories are merged via the similar scene, as shown in \Cref{fig:env}(c).
 
-In this example, the CNN-based feature-point extraction (FE) and place recognition (PR) are both executed on the same Angel-Eye \cite{guo2017angel} accelerator. The frequency of the input camera is 20fps, and each input frame is fed to the FE, and FE module would take up accelerator. While the CPU process VO with the feature-points from FE, the accelerator can switch to process the low-priority PR task, as illustrated in \Cref{fig:inca}(a). Thus, the PR process one frame every 7$\sim$10 input frames.
+In this example, the CNN-based feature-point extraction (FE) and place recognition (PR) are both executed on the same Angel-Eye \cite{guo2017angel} accelerator. The frequency of the input camera is 20fps, and each input frame is fed to the FE, and the FE module would take up the accelerator. While the CPU process VO with the feature-points from FE, the accelerator can switch to process the low-priority PR task, as illustrated in \Cref{fig:inca}(a). Thus, the PR process one frame every 7$\sim$10 input frames.
 However, the scene between adjacent frames is similar, so it is not necessary to do place recognition for each input picture. Place recognition every 10 frames can meet the task requirements of DSLAM.
